@@ -6,6 +6,7 @@ public class UserRegistration {
     private static final String NAME_PATTERN = "^[A-Z][a-z]{2,}$";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+.[a-zA-Z]{2,4}([.][a-z]{2})*$";
     private static final String MOBILE_PATTERN = "^[0-9]{1,3}\\s[0-9]{10}$";
+    private static final String PASSWORD_PATTERN = ".{8,}";
 
     public boolean validateFirstName(String firstName) {
         return Pattern.matches(NAME_PATTERN, firstName);
@@ -23,28 +24,21 @@ public class UserRegistration {
         return Pattern.matches(MOBILE_PATTERN, mobile);
     }
 
+    public boolean validatePassword(String password) {
+        return Pattern.matches(PASSWORD_PATTERN, password);
+    }
+
     public static void main(String[] args) {
         UserRegistration validator = new UserRegistration();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter First Name:");
-        String fName = scanner.next();
-        System.out.println("Valid: " + validator.validateFirstName(fName));
-        System.out.println("\nEnter Last Name:");
-        String lName = scanner.next();
-        System.out.println("Valid: " + validator.validateLastName(lName));
-        System.out.println("\nEnter Email:");
-        String email = scanner.next();
-        System.out.println("Valid: " + validator.validateEmail(email));
-        System.out.println("\nEnter Mobile Number (e.g., 91 9919819801):");
+        System.out.println("\nEnter Password (min 8 characters):");
+        String password = scanner.next();
         
-        scanner.nextLine();
-        String mobile = scanner.nextLine(); 
-        
-        if (validator.validateMobile(mobile)) {
-            System.out.println("Valid Mobile Number.");
+        if (validator.validatePassword(password)) {
+            System.out.println("Password Rule 1 Passed.");
         } else {
-            System.out.println("Invalid Mobile format. Ensure country code, space, and 10 digits.");
+            System.out.println("Invalid Password. Must have at least 8 characters.");
         }
         
         scanner.close();
