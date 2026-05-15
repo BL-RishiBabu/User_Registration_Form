@@ -6,7 +6,7 @@ public class UserRegistration {
     private static final String NAME_PATTERN = "^[A-Z][a-z]{2,}$";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+.[a-zA-Z]{2,4}([.][a-z]{2})*$";
     private static final String MOBILE_PATTERN = "^[0-9]{1,3}\\s[0-9]{10}$";
-    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z]).{8,}$";
+    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9]).{8,}$";
 
     public boolean validateFirstName(String firstName) {
         return Pattern.matches(NAME_PATTERN, firstName);
@@ -32,13 +32,13 @@ public class UserRegistration {
         UserRegistration validator = new UserRegistration();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\nEnter Password (min 8 chars, at least 1 Upper Case):");
+        System.out.println("\nEnter Password (min 8 chars, 1+ Upper Case, 1+ Number):");
         String password = scanner.next();
         
         if (validator.validatePassword(password)) {
-            System.out.println("Password Rule 2 Passed (Valid).");
+            System.out.println("Password Rule 3 Passed (Valid).");
         } else {
-            System.out.println("Invalid Password. Ensure it has 8+ chars and at least 1 Upper Case letter.");
+            System.out.println("Invalid Password. Ensure it has 8+ chars, 1+ Upper Case, and 1+ Numeric digit.");
         }
         
         scanner.close();
