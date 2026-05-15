@@ -30,15 +30,33 @@ public class UserRegistration {
 
     public static void main(String[] args) {
         UserRegistration validator = new UserRegistration();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nEnter Password (8+ chars, 1+ Upper, 1+ Num, Exactly 1 Special):");
-        String password = scanner.next();
         
-        if (validator.validatePassword(password)) {
-            System.out.println("Password Valid: All Rules Passed.");
+        String[] emailSamples = {
+            "abc@yahoo.com",
+            "abc-100@yahoo.com",
+            "abc.100@yahoo.com",
+            "abc111@abc.com",
+            "abc-100@abc.net",
+            "abc.100@abc.com.au",
+            "abc@1.com",
+            "abc@gmail.com.com",
+            "abc+100@gmail.com"
+        };
+
+        System.out.println("--- UC 9: Validating Email Samples ---");
+        for (String sample : emailSamples) {
+            System.out.println("Sample: " + sample + " -> " + (validator.validateEmail(sample) ? "VALID" : "INVALID"));
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Final User Entry Test ---");
+        System.out.println("Enter Email to test:");
+        String userEmail = scanner.next();
+        
+        if (validator.validateEmail(userEmail)) {
+            System.out.println("Email Accepted.");
         } else {
-            System.out.println("Invalid Password. Requirement: 8+ chars, 1+ Upper Case, 1+ Numeric, and EXACTLY 1 special character.");
+            System.out.println("Email Rejected.");
         }
         
         scanner.close();
