@@ -1,28 +1,67 @@
 public class UserRegistrationRunner {
-    public static void main(String[] args) {
-        UserRegistration validator = new UserRegistration();
 
-        test("First Name Happy Case (Amit)", validator.validateFirstName("Amit"), true);
-        test("First Name Sad Case (Am)", validator.validateFirstName("Am"), false);
+    private UserRegistration validator;
 
-        test("Last Name Happy Case (Sharma)", validator.validateLastName("Sharma"), true);
-        test("Last Name Sad Case (sharma)", validator.validateLastName("sharma"), false);
-
-        test("Email Happy Case (abc.xyz@bl.co.in)", validator.validateEmail("abc.xyz@bl.co.in"), true);
-        test("Email Sad Case (abc@.com)", validator.validateEmail("abc@.com"), false);
-
-        test("Mobile Happy Case (91 9919819801)", validator.validateMobile("91 9919819801"), true);
-        test("Mobile Sad Case (919919819801)", validator.validateMobile("919919819801"), false);
-
-        test("Password Happy Case (Pass123@)", validator.validatePassword("Pass123@"), true);
-        test("Password Sad Case (Pass123@@)", validator.validatePassword("Pass123@@"), false);
+    @BeforeEach
+    public void setUp() {
+        validator = new UserRegistration();
     }
 
-    public static void test(String testName, boolean actual, boolean expected) {
-        if (actual == expected) {
-            System.out.println("[PASS] " + testName);
-        } else {
-            System.out.println("[FAIL] " + testName + " | Expected: " + expected + ", but got: " + actual);
-        }
+    @Test
+    public void firstName_Happy() {
+        assertTrue(validator.validateFirstName("Amit"));
+    }
+
+    private void assertTrue(boolean validateFirstName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
+    }
+
+    @Test
+    public void firstName_Sad() {
+        assertFalse(validator.validateFirstName("Am"));
+    }
+
+    private void assertFalse(boolean validateFirstName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertFalse'");
+    }
+
+    @Test
+    public void lastName_Happy() {
+        assertTrue(validator.validateLastName("Sharma"));
+    }
+
+    @Test
+    public void lastName_Sad() {
+        assertFalse(validator.validateLastName("sharma"));
+    }
+
+    @Test
+    public void email_Happy() {
+        assertTrue(validator.validateEmail("abc.xyz@bl.co.in"));
+    }
+
+    @Test
+    public void email_Sad() {
+        assertFalse(validator.validateEmail("abc@.com"));
+    }
+
+    @Test
+    public void mobile_Happy() {
+        assertTrue(validator.validateMobile("91 9919819801"));
+    }
+
+    @Test
+    public void mobile_Sad() {
+        assertFalse(validator.validateMobile("919919819801"));
+    }
+
+    @Test
+    public void password_Happy() {
+        assertTrue(validator.validatePassword("Pass123@"));
+    }
+
+    @Test
+    public void password_Sad() {
+        assertFalse(validator.validatePassword("Pass123@@"));
     }
 }
