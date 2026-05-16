@@ -12,17 +12,9 @@ public class UserRegistrationRunner {
         assertTrue(validator.validateFirstName("Amit"));
     }
 
-    private void assertTrue(boolean validateFirstName) {
-        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
-    }
-
     @Test
     public void firstName_Sad() {
         assertFalse(validator.validateFirstName("Am"));
-    }
-
-    private void assertFalse(boolean validateFirstName) {
-        throw new UnsupportedOperationException("Unimplemented method 'assertFalse'");
     }
 
     @Test
@@ -30,19 +22,50 @@ public class UserRegistrationRunner {
         assertTrue(validator.validateLastName("Sharma"));
     }
 
+    private void assertTrue(boolean validateLastName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
+    }
+
     @Test
     public void lastName_Sad() {
         assertFalse(validator.validateLastName("sharma"));
     }
 
-    @Test
-    public void email_Happy() {
-        assertTrue(validator.validateEmail("abc.xyz@bl.co.in"));
+    private void assertFalse(boolean validateLastName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertFalse'");
     }
 
-    @Test
-    public void email_Sad() {
-        assertFalse(validator.validateEmail("abc@.com"));
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "abc@yahoo.com",
+        "abc-100@yahoo.com",
+        "abc.100@yahoo.com",
+        "abc111@abc.com",
+        "abc-100@abc.net",
+        "abc.100@abc.com.au",
+        "abc@1.com",
+        "abc@gmail.com.com",
+        "abc+100@gmail.com"
+    })
+    public void email_Valid_Multiple(String email) {
+        assertTrue(validator.validateEmail(email));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "abc",
+        "abc@.com",
+        "abc@.com.com",
+        ".abc@abc.com",
+        "abc()*@gmail.com",
+        "abc@%*.com",
+        "abc..2002@gmail.com",
+        "abc.@gmail.com",
+        "abc@abc@gmail.com",
+        "abc@gmail.com.1a"
+    })
+    public void email_Invalid_Multiple(String email) {
+        assertFalse(validator.validateEmail(email));
     }
 
     @Test
