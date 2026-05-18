@@ -8,31 +8,31 @@ public class UserRegistrationRunner {
     }
 
     @Test
-    public void firstName_Happy() {
+    public void firstName_Happy() throws UserRegistration.InvalidUserDetailException {
         assertTrue(validator.validateFirstName("Amit"));
     }
 
+    private void assertTrue(boolean validateFirstName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
+    }
+    
     @Test
     public void firstName_Sad() {
-        assertFalse(validator.validateFirstName("Am"));
+        assertThrows(UserRegistration.InvalidUserDetailException.class, () -> validator.validateFirstName("Am"));
+    }
+
+    private void assertThrows(Class<UserRegistration.InvalidUserDetailException> class1, Object object) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertThrows'");
     }
 
     @Test
-    public void lastName_Happy() {
+    public void lastName_Happy() throws UserRegistration.InvalidUserDetailException {
         assertTrue(validator.validateLastName("Sharma"));
-    }
-
-    private void assertTrue(boolean validateLastName) {
-        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
     }
 
     @Test
     public void lastName_Sad() {
-        assertFalse(validator.validateLastName("sharma"));
-    }
-
-    private void assertFalse(boolean validateLastName) {
-        throw new UnsupportedOperationException("Unimplemented method 'assertFalse'");
+        assertThrows(UserRegistration.InvalidUserDetailException.class, () -> validator.validateLastName("sharma"));
     }
 
     @ParameterizedTest
@@ -47,7 +47,7 @@ public class UserRegistrationRunner {
         "abc@gmail.com.com",
         "abc+100@gmail.com"
     })
-    public void email_Valid_Multiple(String email) {
+    public void email_Valid_Multiple(String email) throws UserRegistration.InvalidUserDetailException {
         assertTrue(validator.validateEmail(email));
     }
 
@@ -65,26 +65,34 @@ public class UserRegistrationRunner {
         "abc@gmail.com.1a"
     })
     public void email_Invalid_Multiple(String email) {
-        assertFalse(validator.validateEmail(email));
+        assertThrows(UserRegistration.InvalidUserDetailException.class, () -> validator.validateEmail(email));
     }
 
     @Test
-    public void mobile_Happy() {
+    public void mobile_Happy() throws UserRegistration.InvalidUserDetailException {
         assertTrue(validator.validateMobile("91 9919819801"));
     }
 
     @Test
     public void mobile_Sad() {
-        assertFalse(validator.validateMobile("919919819801"));
+        assertThrows(UserRegistration.InvalidUserDetailException.class, () -> validator.validateMobile("919919819801"));
+    }
+
+    private void assertThrows(Class<UserRegistration.InvalidUserDetailException> class1, Object object) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertThrows'");
     }
 
     @Test
-    public void password_Happy() {
+    public void password_Happy() throws UserRegistration.InvalidUserDetailException {
         assertTrue(validator.validatePassword("Pass123@"));
     }
 
     @Test
     public void password_Sad() {
-        assertFalse(validator.validatePassword("Pass123@@"));
+        assertThrows(UserRegistration.InvalidUserDetailException.class, () -> validator.validatePassword("Pass123@@"));
+    }
+
+    private void assertThrows(Class<UserRegistration.InvalidUserDetailException> class1, Object object) {
+        throw new UnsupportedOperationException("Unimplemented method 'assertThrows'");
     }
 }

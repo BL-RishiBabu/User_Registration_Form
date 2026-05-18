@@ -8,24 +8,39 @@ public class UserRegistration {
     private static final String MOBILE_PATTERN = "^[0-9]{1,3}\\s[0-9]{10}$";
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=[^@#$%^&+=]*[@#$%^&+=][^@#$%^&+=]*$).{8,}$";
 
-    public boolean validateFirstName(String firstName) {
-        return Pattern.matches(NAME_PATTERN, firstName);
+    public boolean validateFirstName(String firstName) throws InvalidUserDetailException {
+        if (Pattern.matches(NAME_PATTERN, firstName)) {
+            return true;
+        }
+        throw new InvalidUserDetailException("Invalid First Name");
     }
 
-    public boolean validateLastName(String lastName) {
-        return Pattern.matches(NAME_PATTERN, lastName);
+    public boolean validateLastName(String lastName) throws InvalidUserDetailException {
+        if (Pattern.matches(NAME_PATTERN, lastName)) {
+            return true;
+        }
+        throw new InvalidUserDetailException("Invalid Last Name");
     }
 
-    public boolean validateEmail(String email) {
-        return Pattern.matches(EMAIL_PATTERN, email);
+    public boolean validateEmail(String email) throws InvalidUserDetailException {
+        if (Pattern.matches(EMAIL_PATTERN, email)) {
+            return true;
+        }
+        throw new InvalidUserDetailException("Invalid Email");
     }
 
-    public boolean validateMobile(String mobile) {
-        return Pattern.matches(MOBILE_PATTERN, mobile);
+    public boolean validateMobile(String mobile) throws InvalidUserDetailException {
+        if (Pattern.matches(MOBILE_PATTERN, mobile)) {
+            return true;
+        }
+        throw new InvalidUserDetailException("Invalid Mobile Number");
     }
 
-    public boolean validatePassword(String password) {
-        return Pattern.matches(PASSWORD_PATTERN, password);
+    public boolean validatePassword(String password) throws InvalidUserDetailException {
+        if (Pattern.matches(PASSWORD_PATTERN, password)) {
+            return true;
+        }
+        throw new InvalidUserDetailException("Invalid Password");
     }
 
     public static void main(String[] args) {
@@ -45,7 +60,12 @@ public class UserRegistration {
 
         System.out.println("--- UC 9: Validating Email Samples ---");
         for (String sample : emailSamples) {
-            System.out.println("Sample: " + sample + " -> " + (validator.validateEmail(sample) ? "VALID" : "INVALID"));
+            try {
+                validator.validateEmail(sample);
+                System.out.println("Sample: " + sample + " -> VALID");
+            } catch (InvalidUserDetailException e) {
+                System.out.println("Sample: " + sample + " -> INVALID");
+            }
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -53,12 +73,19 @@ public class UserRegistration {
         System.out.println("Enter Email to test:");
         String userEmail = scanner.next();
         
-        if (validator.validateEmail(userEmail)) {
+        try {
+            validator.validateEmail(userEmail);
             System.out.println("Email Accepted.");
-        } else {
-            System.out.println("Email Rejected.");
+        } catch (InvalidUserDetailException e) {
+            System.out.println("Email Rejected. " + e.getMessage());
         }
         
         scanner.close();
+    }
+
+    public static class InvalidUserDetailException extends Exception {
+        public InvalidUserDetailException(String message) {
+            super(message);
+        }
     }
 }
