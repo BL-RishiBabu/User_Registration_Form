@@ -82,10 +82,4 @@ public class UserRegistration {
         
         scanner.close();
     }
-
-    public static class InvalidUserDetailException extends Exception {
-        public InvalidUserDetailException(String message) {
-            super(message);
-        }
-    }
 }
