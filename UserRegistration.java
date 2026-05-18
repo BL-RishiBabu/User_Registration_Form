@@ -8,39 +8,64 @@ public class UserRegistration {
     private static final String MOBILE_PATTERN = "^[0-9]{1,3}\\s[0-9]{10}$";
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=[^@#$%^&+=]*[@#$%^&+=][^@#$%^&+=]*$).{8,}$";
 
-    public boolean validateFirstName(String firstName) throws InvalidUserDetailException {
-        if (Pattern.matches(NAME_PATTERN, firstName)) {
+    private static final UserValidator firstNameValidator = input -> {
+        if (Pattern.matches(NAME_PATTERN, input)) {
             return true;
         }
         throw new InvalidUserDetailException("Invalid First Name");
-    }
+    };
 
-    public boolean validateLastName(String lastName) throws InvalidUserDetailException {
-        if (Pattern.matches(NAME_PATTERN, lastName)) {
+    private static final UserValidator lastNameValidator = input -> {
+        if (Pattern.matches(NAME_PATTERN, input)) {
             return true;
         }
         throw new InvalidUserDetailException("Invalid Last Name");
-    }
+    };
 
-    public boolean validateEmail(String email) throws InvalidUserDetailException {
-        if (Pattern.matches(EMAIL_PATTERN, email)) {
+    private static final UserValidator emailValidator = input -> {
+        if (Pattern.matches(EMAIL_PATTERN, input)) {
             return true;
         }
         throw new InvalidUserDetailException("Invalid Email");
-    }
+    };
 
-    public boolean validateMobile(String mobile) throws InvalidUserDetailException {
-        if (Pattern.matches(MOBILE_PATTERN, mobile)) {
+    private static final UserValidator mobileValidator = input -> {
+        if (Pattern.matches(MOBILE_PATTERN, input)) {
             return true;
         }
         throw new InvalidUserDetailException("Invalid Mobile Number");
-    }
+    };
 
-    public boolean validatePassword(String password) throws InvalidUserDetailException {
-        if (Pattern.matches(PASSWORD_PATTERN, password)) {
+    private static final UserValidator passwordValidator = input -> {
+        if (Pattern.matches(PASSWORD_PATTERN, input)) {
             return true;
         }
         throw new InvalidUserDetailException("Invalid Password");
+    };
+
+    public boolean validateFirstName(String firstName) throws InvalidUserDetailException {
+        return firstNameValidator.validate(firstName);
+    }
+
+    public boolean validateLastName(String lastName) throws InvalidUserDetailException {
+        return lastNameValidator.validate(lastName);
+    }
+
+    public boolean validateEmail(String email) throws InvalidUserDetailException {
+        return emailValidator.validate(email);
+    }
+
+    public boolean validateMobile(String mobile) throws InvalidUserDetailException {
+        return mobileValidator.validate(mobile);
+    }
+
+    public boolean validatePassword(String password) throws InvalidUserDetailException {
+        return passwordValidator.validate(password);
+    }
+
+    @FunctionalInterface
+    public interface UserValidator {
+        boolean validate(String input) throws InvalidUserDetailException;
     }
 
     public static void main(String[] args) {
